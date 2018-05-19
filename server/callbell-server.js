@@ -4,7 +4,7 @@ const express = require('express');
 const PORT = 4200;
 const app = express();
 
-const SUMMON_DELAY = 5000;
+const SUMMON_DELAY = 6000;
 
 let canSummon = true;
 
