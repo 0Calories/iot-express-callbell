@@ -17,12 +17,13 @@ int status = WL_IDLE_STATUS;
 
 WiFiClient client;
 
+int buttonPin = 0;
 int buttonToggle = 0;
 
 void setup() {
 
   Serial.begin(9600);
-  pinMode(5, INPUT);
+  pinMode(buttonPin, INPUT);
 
   // Cancel if board has no wifi shield
   if (WiFi.status() == WL_NO_SHIELD) {
@@ -39,8 +40,6 @@ void setup() {
     delay(1000);
   }
   Serial.println("Successfully connected to WiFi");
-
-  summonRequest();
 }
 
 void loop() {
@@ -53,9 +52,10 @@ void loop() {
   }
 
   // TODO: Check if button has been pressed and call summonRequest()
-  buttonToggle = digitalRead(5);
+  buttonToggle = digitalRead(buttonPin);
   if (buttonToggle == HIGH) {
-    Serial.println("Button was pushed!");
+    summonRequest();
+    delay(500);
   }
 }
 
