@@ -56,10 +56,22 @@ void setup() {
 
 void loop() {
 
+  // Check the status of the WiFi
+  // If we have lost connection, set LED to red and attempt to reconnect every 10 seconds
+  while (WiFi.status() == WL_DISCONNECTED) {
+    Serial.println("Lost connection the WiFi!");
+    setColour(255, 0, 0);
+    delay(10000);
+    WiFi.begin(ssid, pass);
+  }
+
+  if (WiFi.status() == WL_CONNECTED && canSummon) {
+    setColour(0, 255, 0);
+  }
+
   // If cannot currently summon, block thread for 6 secs
   if (!canSummon) {
     delay(6000);
-    setColour(0, 255, 0);
     canSummon = true;
   }
 
@@ -81,8 +93,8 @@ void summonRequest() {
       // Send POST request
       client.println("POST /call");
       client.println();
-      canSummon = false;
     }
+    canSummon = false;
   }
 }
 

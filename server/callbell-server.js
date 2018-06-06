@@ -1,5 +1,6 @@
 const notifier = require('node-notifier');
 const express = require('express');
+const {getDateTime} = require('./utils');
 
 const PORT = 4200;
 const app = express();
@@ -22,6 +23,8 @@ app.post('/call', (req, res) => {
             icon: './resources/bell-icon.png',
             wait: false
         });
+
+        console.log(`${getDateTime()} Summon request received`);
 
         // Anti spam timeout function
         setTimeout(() => canSummon = true, SUMMON_DELAY);
