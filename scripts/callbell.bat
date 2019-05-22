@@ -1,1 +1,2 @@
-node D:\Documents\Projects\Node\CallBell\server\callbell-server.js
+cd D:\Documents\Projects\Node\CallBell\
+node server\callbell-server.js

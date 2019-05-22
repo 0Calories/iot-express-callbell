@@ -1,6 +1,8 @@
 const notifier = require('node-notifier');
 const express = require('express');
-const {getDateTime} = require('./utils');
+
+const { client, fromPhonenum, toPhonenum } = require('./auth');
+const { getDateTime } = require('./utils');
 
 const PORT = 4200;
 const app = express();
@@ -26,6 +28,9 @@ app.post('/call', (req, res) => {
 
         console.log(`${getDateTime()} Summon request received`);
 
+        // Also send a text notification because I might not be on my computer!
+        sendTextNotification();
+
         // Anti spam timeout function
         setTimeout(() => canSummon = true, SUMMON_DELAY);
         res.status(200).send();
@@ -39,3 +44,11 @@ app.listen(PORT, () => {
     console.log(`Started on port ${PORT}`);
 });
 
+const sendTextNotification = () => {
+    client.messages
+        .create({
+            body: 'You have been summoned!',
+            from: fromPhonenum,
+            to: toPhonenum
+        });
+};
